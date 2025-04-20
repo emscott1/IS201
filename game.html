@@ -90,6 +90,7 @@
     <input type="number" id="guessInput" min="1" max="100">
     <br>
     <button onclick="checkGuess()">Submit Guess</button>
+    <button id="playAgainBtn" onclick="resetGame()" style="display: none;">Play Again</button>
     <div class="message" id="message"></div>
     <div class="message" id="attempts"></div>
   </div>
@@ -97,8 +98,11 @@
   <script>
     let secretNumber = Math.floor(Math.random() * 100) + 1;
     let guessCount = 0;
+    let gameOver = false;
 
     function checkGuess() {
+      if (gameOver) return;
+
       const userGuess = Number(document.getElementById('guessInput').value);
       const message = document.getElementById('message');
       const attempts = document.getElementById('attempts');
@@ -112,11 +116,23 @@
       if (userGuess === secretNumber) {
         message.innerHTML = `🎉 <span class="highlight">Correct!</span> The number was ${secretNumber}.`;
         attempts.innerHTML = `You guessed it in <span class="highlight">${guessCount}</span> attempts! 🎊`;
+        gameOver = true;
+        document.getElementById('playAgainBtn').style.display = 'inline-block';
       } else if (userGuess < secretNumber) {
         message.textContent = "📉 Too low! Try again.";
       } else {
         message.textContent = "📈 Too high! Try again.";
       }
+    }
+
+    function resetGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      guessCount = 0;
+      gameOver = false;
+      document.getElementById('message').textContent = "";
+      document.getElementById('attempts').textContent = "";
+      document.getElementById('guessInput').value = "";
+      document.getElementById('playAgainBtn').style.display = 'none';
     }
   </script>
 </body>
