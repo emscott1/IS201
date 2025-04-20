@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      background: #e0f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #003366;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #006064;
+      padding: 1rem;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .game-box {
+      background-color: #b2ebf2;
+      padding: 2rem;
+      margin: 3rem auto;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      color: #004d40;
+      font-size: 2rem;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      font-size: 1rem;
+      width: 80px;
+      margin-top: 1rem;
+      border: 1px solid #004d40;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-top: 1rem;
+      background-color: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0097a7;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #d84315;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="scratch_page/scratch_page.html">← Back to Surfing</a>
+  </nav>
+
+  <div class="game-box">
+    <h1>🎯 Number Guessing Game</h1>
+    <p>Guess a number between <span class="highlight">1</span> and <span class="highlight">100</span></p>
+    <input type="number" id="guessInput" min="1" max="100">
+    <br>
+    <button onclick="checkGuess()">Submit Guess</button>
+    <div class="message" id="message"></div>
+    <div class="message" id="attempts"></div>
+  </div>
+
+  <script>
+    let secretNumber = Math.floor(Math.random() * 100) + 1;
+    let guessCount = 0;
+
+    function checkGuess() {
+      const userGuess = Number(document.getElementById('guessInput').value);
+      const message = document.getElementById('message');
+      const attempts = document.getElementById('attempts');
+      guessCount++;
+
+      if (!userGuess || userGuess < 1 || userGuess > 100) {
+        message.textContent = "⛔ Please enter a number between 1 and 100.";
+        return;
+      }
+
+      if (userGuess === secretNumber) {
+        message.innerHTML = `🎉 <span class="highlight">Correct!</span> The number was ${secretNumber}.`;
+        attempts.innerHTML = `You guessed it in <span class="highlight">${guessCount}</span> attempts! 🎊`;
+      } else if (userGuess < secretNumber) {
+        message.textContent = "📉 Too low! Try again.";
+      } else {
+        message.textContent = "📈 Too high! Try again.";
+      }
+    }
+  </script>
+</body>
+</html>
